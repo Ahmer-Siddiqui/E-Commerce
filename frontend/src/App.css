@@ -51,6 +51,10 @@
 .register{
   margin-left: 30%;
 }
+.login{
+  margin-left: 30%;
+  margin-left: 100px;
+}
 
 .inputBox {
   padding: 7px;
