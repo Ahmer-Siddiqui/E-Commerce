@@ -29,6 +29,7 @@ const Login = () => {
       },[])
   return (
     <div className="login">
+      <h1>Login</h1>
       <input type="email" className="inputBox" placeholder="Enter Email" onChange={(e)=>setEmail(e.target.value)} value={email}/>
       <input
         type="password"
