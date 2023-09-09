@@ -10,8 +10,8 @@ app.use(cors());
 
 app.post("/register", async (req, resp) => {
   let user = await User.create(req.body);
-  let result = user.toObject()
-  delete result.password
+  let result = user.toObject();
+  delete result.password;
   console.log(result);
 
   resp.send(req.body);
@@ -24,16 +24,25 @@ app.post("/login", async (req, resp) => {
     } else {
       resp.send({ result: "No User Found" });
     }
-  }else{
+  } else {
     resp.send({ result: "No User Found" });
   }
 });
 
-app.post("/add-product", async (req, resp)=>{
+app.post("/add-product", async (req, resp) => {
   let product = new Product(req.body);
-  let result = await product.save(); 
-  resp.send(result)
-})
+  let result = await product.save();
+  resp.send(result);
+});
+
+app.get("/products", async (req, resp) => {
+  let products = await Product.find();
+  if(products){
+    resp.send(products)
+  }else{
+    resp.send({result: "No Products Found"});
+  }
+});
 
 app.listen(5000, () => {
   console.log(`Server is Running...`);
