@@ -68,3 +68,13 @@
   display: block;
   margin-left: 20px;
 }
+.product-list{
+  text-align: center;
+  margin: 50px;
+}
+.product-list ul li{
+  display: inline-block;
+  border: 1px solid skyblue;
+  padding: 5px;
+  width: 150px;
+}
