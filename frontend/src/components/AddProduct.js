@@ -5,17 +5,24 @@ const AddProduct = () => {
   const [price, setPrice] = useState("");
   const [category, setCategory] = useState("");
   const [company, setCompany] = useState("");
-  const addProduct = async()=>{
-    console.log(name,price,company,category);
-    const userId = JSON.parse(localStorage.getItem('user'))._id
-    let result = await fetch("http://localhost:5000/add-product",{
-      method: 'post',
-      body: JSON.stringify({name,price,category,company,userId}),
-      headers: {"Content-Type": "application/json"}
-    })
-    result = await result.json()
+  const [error, setError] = useState(false);
+  
+  const addProduct = async () => {
+
+    if(!name || !price || !category || !company){
+      setError(true)
+      return false;
+    }
+
+    const userId = JSON.parse(localStorage.getItem("user"))._id;
+    let result = await fetch("http://localhost:5000/add-product", {
+      method: "post",
+      body: JSON.stringify({ name, price, category, company, userId }),
+      headers: { "Content-Type": "application/json" },
+    });
+    result = await result.json();
     console.log(userId);
-  }
+  };
   return (
     <div className="product">
       <h1>Add Product</h1>
@@ -28,34 +35,40 @@ const AddProduct = () => {
           setName(e.target.value);
         }}
       />
+      {error && !name && <span className="invalid-input">Enter valid name</span>}
       <input
         type="text"
         className="inputBox"
         placeholder="Enter Product price"
         value={price}
         onChange={(e) => {
-        setPrice(e.target.value);
+          setPrice(e.target.value);
         }}
       />
+      {error && !price && <span className="invalid-input">Enter valid price</span>}
       <input
         type="text"
         className="inputBox"
         placeholder="Enter Product category"
         value={category}
         onChange={(e) => {
-        setCategory(e.target.value);
+          setCategory(e.target.value);
         }}
       />
+      {error && !category && <span className="invalid-input">Enter valid category</span>}
       <input
         type="text"
         className="inputBox"
         placeholder="Enter Product company"
         value={company}
         onChange={(e) => {
-        setCompany(e.target.value);
+          setCompany(e.target.value);
         }}
       />
-      <button onClick={addProduct} className="appButton">Add Product</button>
+      {error && !company && <span className="invalid-input">Enter valid company</span>}
+      <button onClick={addProduct} className="appButton">
+        Add Product
+      </button>
     </div>
   );
 };
