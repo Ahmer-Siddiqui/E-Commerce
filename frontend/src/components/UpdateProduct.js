@@ -7,16 +7,17 @@ const UpdateProduct = () => {
   const [price, setPrice] = useState("");
   const [category, setCategory] = useState("");
   const [company, setCompany] = useState("");
-  const [data, setData] = useState({});
 
   const updateProduct = async () => {
     console.log(name,price,category,company);
   }
   const getProductsDetails = async () => {
-      console.log(params);
     let result = await fetch(`http://localhost:5000/products/${params.id}`);
     result = await result.json();
-    // setProducts(result);
+    setName(result.name)
+    setPrice(result.price)
+    setCategory(result.category)
+    setCompany(result.company)
   };      
   useEffect(()=>{
     getProductsDetails()
