@@ -52,7 +52,7 @@ app.get("/products/:id", async (req, resp) => {
   }
 });
 
-app.delete("/product/:id",async(req, resp)=>{
+app.delete("/product/:id",async(req, resp)=>{ 
   let result = await Product.deleteOne({_id: req.params.id});
   resp.send(result) 
 })
