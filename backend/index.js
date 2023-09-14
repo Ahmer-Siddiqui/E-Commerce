@@ -10,9 +10,26 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-app.post("/register", async (req, resp) => {
-  let user = await User.create(req.body); 
-  let result = user.toObject();  
+function verifyToken(req, res, next) {
+  let token = req.headers["authorization"];
+  if (token) {
+    token = token;
+    Jwt.verify(token, jwtKey, (err, valid) => {
+      if (err) {
+        res.status(401).send({ result: "Please provide valid token" });
+      } else {
+        next();
+      }
+    });
+  } else {
+    res.status(403).send({ result: "Please add token with header" });
+  }
+  console.log("Middleware Call", token);
+}
+
+app.post("/register", verifyToken, async (req, resp) => {
+  let user = await User.create(req.body);
+  let result = user.toObject();
   delete result.password;
   Jwt.sign({ result }, jwtKey, { expiresIn: "2h" }, (err, token) => {
     if (err) {
@@ -20,11 +37,11 @@ app.post("/register", async (req, resp) => {
         result: "Something went wrong, Please try after sometime",
       });
     }
-    resp.send({result, auth: token})
+    resp.send({ result, auth: token });
   });
 });
 
-app.post("/login", async (req, resp) => {
+app.post("/login",verifyToken ,async (req, resp) => {
   if (req.body.password && req.body.email) {
     let user = await User.findOne(req.body).select("-password");
     if (user) {
@@ -44,13 +61,13 @@ app.post("/login", async (req, resp) => {
   }
 });
 
-app.post("/add-product", async (req, resp) => {
+app.post("/add-product", verifyToken, async (req, resp) => {
   let product = new Product(req.body);
   let result = await product.save();
   resp.send(result);
 });
 
-app.get("/products", async (req, resp) => {
+app.get("/products",verifyToken ,async (req, resp) => {
   let products = await Product.find();
   if (products) {
     resp.send(products);
@@ -58,7 +75,7 @@ app.get("/products", async (req, resp) => {
     resp.send({ result: "No Products Found" });
   }
 });
-app.get("/products/:id", async (req, resp) => {
+app.get("/products/:id", verifyToken ,async (req, resp) => {
   let products = await Product.findOne({ _id: req.params.id });
   if (products) {
     resp.send(products);
@@ -67,18 +84,18 @@ app.get("/products/:id", async (req, resp) => {
   }
 });
 
-app.delete("/product/:id", async (req, resp) => {
+app.delete("/product/:id",verifyToken ,async (req, resp) => {
   let result = await Product.deleteOne({ _id: req.params.id });
   resp.send(result);
 });
-app.put("/products/:id", async (req, resp) => {
+app.put("/products/:id",verifyToken ,async (req, resp) => {
   let result = await Product.updateOne(
     { _id: req.params.id },
     { $set: req.body }
   );
   resp.send(result);
 });
-app.get("/search/:key", async (req, resp) => {
+app.get("/search/:key", verifyToken, async (req, resp) => {
   let result = await Product.find({
     $or: [
       { name: { $regex: req.params.key } },
