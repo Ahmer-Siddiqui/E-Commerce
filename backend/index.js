@@ -11,8 +11,8 @@ app.use(express.json());
 app.use(cors());
 
 app.post("/register", async (req, resp) => {
-  let user = await User.create(req.body);
-  let result = user.toObject();
+  let user = await User.create(req.body); 
+  let result = user.toObject();  
   delete result.password;
   Jwt.sign({ result }, jwtKey, { expiresIn: "2h" }, (err, token) => {
     if (err) {
