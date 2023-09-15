@@ -27,7 +27,7 @@ function verifyToken(req, res, next) {
   console.log("Middleware Call", token);
 }
 
-app.post("/register", verifyToken, async (req, resp) => {
+app.post("/register", async (req, resp) => {
   let user = await User.create(req.body);
   let result = user.toObject();
   delete result.password;
@@ -41,7 +41,7 @@ app.post("/register", verifyToken, async (req, resp) => {
   });
 });
 
-app.post("/login",verifyToken ,async (req, resp) => {
+app.post("/login", async (req, resp) => {
   if (req.body.password && req.body.email) {
     let user = await User.findOne(req.body).select("-password");
     if (user) {
