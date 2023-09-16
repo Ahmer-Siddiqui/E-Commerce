@@ -1,4 +1,4 @@
-const User = require("../../model/user/User");
+const User = require("../../model/user/userProduct");
 const Jwt = require("jsonwebtoken");
 const { jwtKey } = process.env;
 

@@ -1,4 +1,7 @@
-function verifyToken(req, res, next) {
+const Jwt = require("jsonwebtoken");
+const { jwtKey } = process.env;
+
+const verifyToken = (req, res, next) => {
   if (req.url === "/user/register") {
     next();
   } else if (req.url === "/user/login") {
@@ -18,6 +21,6 @@ function verifyToken(req, res, next) {
       res.status(403).send({ result: "Please add token with header" });
     }
   }
-}
+};
 
 module.exports = verifyToken;
