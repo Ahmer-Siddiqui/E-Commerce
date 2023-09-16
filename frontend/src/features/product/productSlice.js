@@ -1,8 +1,28 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import productService from './productService';
 
 const initialState = {
   value: 0,
 }
+
+// export const deleteBranchesData = createAsyncThunk(
+//   "product/get",
+//   async (branchesData, thunkAPI) => {
+//     try {
+//       console.log("branchesData", branchesData);
+//       const result = await branchService.deleteBranchesData(branchesData);
+//       return result;
+//     } catch (error) {
+//       const message =
+//           (error.response &&
+//           error.response.data &&
+//           error.response.data.message) ||
+//         error.message ||
+//         error.toString();
+//       return thunkAPI.rejectWithValue(message);
+//     }
+//   }
+// );
 
 export const productSlice = createSlice({
   name: 'productlist',

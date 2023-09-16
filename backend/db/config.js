@@ -1,10 +1,9 @@
 const mongoose = require('mongoose');
 
 const connectDB = async ()=>{
-   const conn = await mongoose.connect("mongodb://127.0.0.1:27017/e-commerce")
+   const conn = await mongoose.connect(process.env.MONGO_URL)
    const db = await mongoose.connection;
    console.log(`${db.name} database Connected...`);
-
 }
 
-connectDB();
+connectDB(); 
