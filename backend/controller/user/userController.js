@@ -18,7 +18,7 @@ const loginUser = async (req, resp) => {
       resp.send({ result: "No User Found" });
     }
   } else {
-    resp.send({ result: "No User Found" });
+    resp.send({ result: "Some Error occured" });
   }
 };
 
