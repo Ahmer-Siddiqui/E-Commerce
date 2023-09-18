@@ -14,7 +14,6 @@ function App() {
     <div className="App">
       <Nav />
       <Routes>
-
         <Route path="/" element={<PrivateComponent />}>
           <Route path="/" element={<ProductList/>} />
           <Route path="/add" element={<AddProduct />} />

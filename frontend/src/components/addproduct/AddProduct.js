@@ -1,27 +1,44 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { addingProduct } from "../../features/product/productSlice";
 
 const AddProduct = () => {
+  const dispatch = useDispatch();
+  const [productData, setProductData] = useState({
+    name: "",
+    category: "",
+    company: "",
+    price: "",
+  });
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [category, setCategory] = useState("");
   const [company, setCompany] = useState("");
   const [error, setError] = useState(false);
-  
+
   const addProduct = async () => {
-
-    if(!name || !price || !category || !company){
-      setError(true)
+    const { name, price, category, company } = productData;
+    if (!name || !price || !category || !company) {
+      setError(true);
       return false;
+    } else {
+      dispatch(addingProduct(productData));
     }
-
-    const userId = JSON.parse(localStorage.getItem("user"))._id;
-    let result = await fetch("http://localhost:5000/add-product", {
-      method: "post",
-      body: JSON.stringify({ name, price, category, company, userId }),
-      headers: { "Content-Type": "application/json" },
+    setProductData({
+      name: "",
+      category: "",
+      company: "",
+      price: "",
     });
-    result = await result.json();
-    console.log(userId);
+  };
+
+  const onChangeHandler = (e) => {
+    const { name, value } = e.target;
+    setProductData({
+      ...productData,
+      [name]: value,
+    });
+    
   };
   return (
     <div className="product">
@@ -30,42 +47,46 @@ const AddProduct = () => {
         type="text"
         className="inputBox"
         placeholder="Enter Product Name"
-        value={name}
-        onChange={(e) => {
-          setName(e.target.value);
-        }}
+        name="name"
+        value={productData.name}
+        onChange={onChangeHandler}
       />
-      {error && !name && <span className="invalid-input">Enter valid name</span>}
+      {error && !name && (
+        <span className="invalid-input">Enter valid name</span>
+      )}
       <input
         type="text"
         className="inputBox"
         placeholder="Enter Product price"
-        value={price}
-        onChange={(e) => {
-          setPrice(e.target.value);
-        }}
+        name="price"
+        value={productData.price}
+        onChange={onChangeHandler}
       />
-      {error && !price && <span className="invalid-input">Enter valid price</span>}
+      {error && !price && (
+        <span className="invalid-input">Enter valid price</span>
+      )}
       <input
         type="text"
         className="inputBox"
         placeholder="Enter Product category"
-        value={category}
-        onChange={(e) => {
-          setCategory(e.target.value);
-        }}
+        name="category"
+        value={productData.category}
+        onChange={onChangeHandler}
       />
-      {error && !category && <span className="invalid-input">Enter valid category</span>}
+      {error && !category && (
+        <span className="invalid-input">Enter valid category</span>
+      )}
       <input
         type="text"
         className="inputBox"
         placeholder="Enter Product company"
-        value={company}
-        onChange={(e) => {
-          setCompany(e.target.value);
-        }}
+        name="company"
+        value={productData.company}
+        onChange={onChangeHandler}
       />
-      {error && !company && <span className="invalid-input">Enter valid company</span>}
+      {error && !company && (
+        <span className="invalid-input">Enter valid company</span>
+      )}
       <button onClick={addProduct} className="appButton">
         Add Product
       </button>

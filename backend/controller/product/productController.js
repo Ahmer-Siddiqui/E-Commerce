@@ -1,9 +1,12 @@
 const Product = require("../../model/product/productModel");
 
 const addProduct = async (req, resp) => {
-  let product = new Product(req.body);
-  let result = await product.save();
-  resp.send(result);
+  let product = await Product.create(req.body);
+  if(product){ 
+    resp.send({result: "Add Data Successfully"});
+  }else{
+    resp.send({result: "Error Occurred"});
+  }
 };
 
 const getProduct = async (req, resp) => {
@@ -18,7 +21,7 @@ const deleteSingleProduct = async (req, resp) => {
   let result = await Product.deleteOne({ _id: req.params.id });
   resp.send(result);
 };
-
+  
 const updateSingleProduct = async (req, resp) => {
   let result = await Product.updateOne(
     { _id: req.params.id },

@@ -1,37 +1,47 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
+import { getSingleProduct, updateSingleProduct } from "../../features/product/productSlice";
 
 const UpdateProduct = () => {
-  const params = useParams(); 
   const navigate = useNavigate();
-  const [name, setName] = useState("");
-  const [price, setPrice] = useState("");
-  const [category, setCategory] = useState("");
-  const [company, setCompany] = useState("");
+  const params = useParams();
+  const dispatch = useDispatch();
 
-  const updateProduct = async () => {
-    let result = await fetch(`http://localhost:5000/products/${params.id}`, {
-      method: "put",
-      body: JSON.stringify({ name, price, category, company}),
-      headers: { "Content-Type": "application/json" },
-    });
-    result = await result.json();
-    navigate("/")
-    console.log(result);
-  }
+  const singleProduct = useSelector((state) => state.product.singleProduct);
 
-  const getProductsDetails = async () => {
-    let result = await fetch(`http://localhost:5000/products/${params.id}`);
-    result = await result.json();
-    setName(result.name)
-    setPrice(result.price)
-    setCategory(result.category)
-    setCompany(result.company)
+  const [updateData, setUpdateData] = useState({
+    name: "",
+    price: "",
+    category: "",
+    company: "",
+  });
+
+  const onUpdateProductHandler = async () => {
+    dispatch(updateSingleProduct(updateData))
+    navigate("/");
   };
 
-  useEffect(()=>{
-    getProductsDetails()
-  },[])
+  const getProductsDetails = async () => {
+      setUpdateData(singleProduct)
+  };
+
+
+  const onChangeHandler = (e) => {
+    const { name, value } = e.target;
+    setUpdateData({
+      ...updateData,
+      [name]: value,
+    });
+  }; 
+  
+  useEffect(() => {
+    dispatch(getSingleProduct(params.id));
+  }, [dispatch]);
+  
+  useEffect(() => {
+    getProductsDetails();
+  }, [singleProduct]);
   return (
     <div className="product">
       <h1>Update Product</h1>
@@ -39,39 +49,38 @@ const UpdateProduct = () => {
         type="text"
         className="inputBox"
         placeholder="Enter Product Name"
-        value={name}
-        onChange={(e) => {
-          setName(e.target.value);
-        }}
+        name="name"
+        value={updateData.name}
+        onChange={onChangeHandler}
       />
       <input
         type="text"
         className="inputBox"
         placeholder="Enter Product price"
-        value={price}
-        onChange={(e) => {
-          setPrice(e.target.value);
-        }}
+        name="price"
+        value={updateData.price}
+        onChange={onChangeHandler}
       />
       <input
         type="text"
         className="inputBox"
         placeholder="Enter Product category"
-        value={category}
-        onChange={(e) => {
-          setCategory(e.target.value);
-        }}
+        name="category"
+        value={updateData.category}
+        onChange={onChangeHandler}
       />
       <input
         type="text"
         className="inputBox"
         placeholder="Enter Product company"
-        value={company}
-        onChange={(e) => {
-          setCompany(e.target.value);
-        }}
+        name="company"
+        value={updateData.company}
+        onChange={onChangeHandler}
       />
-      <button onClick={updateProduct} className="appButton">
+      <button
+        onClick={onUpdateProductHandler}
+        className="appButton"
+      >
         Update Product
       </button>
     </div>

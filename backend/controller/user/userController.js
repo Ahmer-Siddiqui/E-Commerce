@@ -12,10 +12,10 @@ const loginUser = async (req, resp) => {
             result: "Something went wrong, Please try after sometime",
           });
         }
-        resp.send({ user, auth: token });
+        resp.status(200).json({ user, auth: token });
       });
     } else {
-      resp.send({ result: "No User Found" });
+      resp.status(404).json({ result: "No User Found" });
     }
   } else {
     resp.send({ result: "Some Error occured" });

@@ -1,15 +1,16 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   allProducts,
   deleteProduct,
+  getSingleProduct,
   searchingProducts,
 } from "../../features/product/productSlice";
 
 const ProductList = () => {
   const dispatch = useDispatch();
-  // const [products, setProducts] = useState([]);
+  const navigate = useNavigate();
   const products = useSelector((state) => state.product.products);
 
   const onDeleteProductHandler = async (id) => {
@@ -18,12 +19,17 @@ const ProductList = () => {
   };
   const onSearchHandler = async (e) => {
     let key = e.target.value;
-    if(key){
-      dispatch(searchingProducts(key))
-    }else{
+    if (key) {
+      dispatch(searchingProducts(key));
+    } else {
       dispatch(allProducts());
     }
   };
+
+  const onUpdateHandler = (id)=>{
+    dispatch(getSingleProduct(id));
+    navigate(`/update/${id}`)
+  }
 
   useEffect(() => {
     dispatch(allProducts());
@@ -61,7 +67,13 @@ const ProductList = () => {
                 >
                   Delete
                 </button>
-                <Link to={`/update/${item._id}`}>Update</Link>
+                <button
+                  onClick={() => {
+                    onUpdateHandler(item._id);
+                  }}
+                >
+                  Update
+                </button>
               </li>
             </ul>
           );

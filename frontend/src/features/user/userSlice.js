@@ -2,8 +2,8 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import userService from './userService';
 
 const initialState = {
-  invoicing: {},
   isLoading: false,
+  result: {},
   isError: false,
   isSuccess: false,
   message: "",
@@ -11,29 +11,29 @@ const initialState = {
 
 export const userLogin = createAsyncThunk(
   "user/userLogin",
-  async (userLoginData, thunkAPI) => {
-    // try {
-      const result = await userService.login();
-      // return result;
-    // } 
-    // catch (error) {
-    //   const message =
-    //       (error.response &&
-    //       error.response.data &&
-    //       error.response.data.message) ||
-    //     error.message ||
-    //     error.toString();
-    //   return thunkAPI.rejectWithValue(message);
-    // }
+  async (data, thunkAPI) => {
+    try {
+      const result = await userService.login(data);
+      return thunkAPI.fulfillWithValue(result);
+    } 
+    catch (error) {
+      const message =
+          (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
   }
 );
 
-export const productSlice = createSlice({
-  name: 'productlist',
+export const userSlice = createSlice({
+  name: 'user',
   initialState,
   reducers: {
-    increment: (state) => {
-      state.value += 1
+    logout: (state) => {
+      state.result = {}
     },
     decrement: (state) => {
       state.value -= 1
@@ -44,16 +44,18 @@ export const productSlice = createSlice({
   }
   ,extraReducers: (builder) => {
     builder
+    //UserLogin
       .addCase(userLogin.pending, (state) => {
         state.isLoading = true;
         state.isSuccess = false;
-        state.isError = true;
+        state.isError = false;
 
       })
       .addCase(userLogin.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
-        state.Branches.push(action.payload);
+        state.isError = false;
+        state.result = action.payload;
       })
       .addCase(userLogin.rejected, (state, action) => {
         state.isSuccess = false;
@@ -63,5 +65,5 @@ export const productSlice = createSlice({
   },
 })
 
-export const { increment, decrement, incrementByAmount } = productSlice.actions
-export default productSlice.reducer
+export const { logout, decrement, incrementByAmount } = userSlice.actions
+export default userSlice.reducer
