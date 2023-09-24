@@ -1,0 +1,17 @@
+.productList .search-product-box {
+  width: 400px;
+  margin: 20px;
+  height: 40px;
+  border: 1px solid skyblue;
+  padding-left: 20px;
+}
+.productList ul li {
+  display: inline-block;
+  border: 1px solid skyblue;
+  padding: 5px;
+  width: 150px;
+}
+.productList {
+  text-align: center;
+  margin: 50px;
+}

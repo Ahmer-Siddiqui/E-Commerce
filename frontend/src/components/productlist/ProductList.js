@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import "./productList.css"
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {
@@ -11,6 +12,7 @@ import {
 const ProductList = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [key, setKey] = useState("");
   const products = useSelector((state) => state.product.products);
 
   const onDeleteProductHandler = async (id) => {
@@ -18,25 +20,31 @@ const ProductList = () => {
     dispatch(allProducts());
   };
   const onSearchHandler = async (e) => {
-    let key = e.target.value;
-    if (key) {
-      dispatch(searchingProducts(key));
-    } else {
-      dispatch(allProducts());
-    }
+    setKey(e.target.value);
   };
 
-  const onUpdateHandler = (id)=>{
+  const onUpdateHandler = (id) => {
     dispatch(getSingleProduct(id));
-    navigate(`/update/${id}`)
-  }
+    navigate(`/update/${id}`);
+  };
+
+  useEffect(() => {
+    const timerId = setTimeout(() => {
+      if (key) {
+        dispatch(searchingProducts(key));
+      } else {
+        dispatch(allProducts());
+      }
+    }, 1000);
+    return () => clearTimeout(timerId);
+  }, [key]);
 
   useEffect(() => {
     dispatch(allProducts());
   }, [dispatch]);
 
   return (
-    <div className="product-list">
+    <div className="productList">
       <h3>Product List</h3>
       <input
         type="text"

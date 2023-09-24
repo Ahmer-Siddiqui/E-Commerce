@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import "./signup.css"
 import {useNavigate} from 'react-router-dom' 
 
 const SignUp = () => {
@@ -33,7 +34,7 @@ const SignUp = () => {
     }
   }
   return (
-    <div className="register">
+    <div className="register signup">
       <h1>Register</h1>
       <input
         className="inputBox"

@@ -100,7 +100,6 @@ export const deleteProduct = createAsyncThunk(
 export const searchingProducts = createAsyncThunk(
   "product/search",
   async (key, thunkAPI) => {
-    console.log(key);
     try {
       const result = await productService.searchProductByKey(key);
       return thunkAPI.fulfillWithValue(result);

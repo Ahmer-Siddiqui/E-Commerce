@@ -1,0 +1,35 @@
+.navbar{
+  margin: 0;
+  padding: 0;
+}
+.navbar .nav-ul {
+  position: sticky;
+  display: flex;
+  align-items: center;
+  height: 10vh;
+  width: 100vw;
+  background-color: skyblue;
+}
+
+.navbar .logo {
+  height: 100%;
+  width: 15%;
+}
+.navbar .logo img {
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
+}
+.navbar .nav-right {
+  display: flex;
+  justify-content: flex-end;
+}
+.navbar .nav-ul li {
+  display: inline-block;
+  padding: 10px;
+}
+.navbar .nav-ul li a {
+  color: #fff;
+  text-decoration: none;
+  padding: 5px;
+}

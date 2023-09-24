@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import "./updateProduct.css"
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { getSingleProduct, updateSingleProduct } from "../../features/product/productSlice";
@@ -43,7 +44,7 @@ const UpdateProduct = () => {
     getProductsDetails();
   }, [singleProduct]);
   return (
-    <div className="product">
+    <div className="updateProduct">
       <h1>Update Product</h1>
       <input
         type="text"

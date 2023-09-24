@@ -1,4 +1,4 @@
-// import { useEffect, useState } from "react";
+import "./nav.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logout } from "../../../features/user/userSlice";
@@ -13,7 +13,7 @@ const Nav = () => {
     navigate("/signup");
   };
   return (
-    <div>
+    <div className="navbar">
       {auth ? (
         <ul className="nav-ul">
           <div className="logo">
@@ -39,7 +39,7 @@ const Nav = () => {
         </ul>
       ) : (
         <ul className="nav-ul nav-right">
-          <div className="logo">
+          <div className="logo" style={{position: "absolute", left: "0"}}>
             <img src={require("../../../assets/img/logo.png")} alt="logo" />
           </div>
           <li>

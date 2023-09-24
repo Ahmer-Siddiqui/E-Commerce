@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "./addProduct.css"
 import { useDispatch } from "react-redux";
 import { addingProduct } from "../../features/product/productSlice";
 
@@ -41,7 +42,7 @@ const AddProduct = () => {
     
   };
   return (
-    <div className="product">
+    <div className="product addProduct">
       <h1>Add Product</h1>
       <input
         type="text"
