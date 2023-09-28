@@ -1,25 +1,38 @@
 const Product = require("../../model/product/productModel");
 
 const addProduct = async (req, resp) => {
-  let product = await Product.create(req.body);
-  if(product){ 
-    resp.send({result: "Add Data Successfully"});
-  }else{
-    resp.send({result: "Error Occurred"});
+  try {
+    let product = await Product.create(req.body);
+    if(product){ 
+      resp.send({result: "Add Data Successfully"});
+    }else{
+      resp.send({result: "Error Occurred"});
+    }
+  } catch (err) {
+    resp.send({result: "Error Occurred",error: err});
   }
 };
 
 const getProduct = async (req, resp) => {
-  let products = await Product.find();
-  if (products) {
-    resp.send(products);
-  } else {
-    resp.send({ result: "No Products Found" });
+  try {
+    let products = await Product.find();
+    if (products) {
+      resp.send(products);
+    } else {
+      resp.send({ result: "No Products Found" });
+    }
+  } catch (err) {
+    resp.send({result: "Error Occurred",error: err});
+
   }
 };
 const deleteSingleProduct = async (req, resp) => {
-  let result = await Product.deleteOne({ _id: req.params.id });
-  resp.send(result);
+  try{
+    let result = await Product.deleteOne({ _id: req.params.id });
+    resp.send(result);
+  }catch(err){
+    resp.send({result: "Error Occurred",error: err});
+  }
 };
   
 const updateSingleProduct = async (req, resp) => {

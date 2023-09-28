@@ -1,37 +1,46 @@
 import React, { useEffect, useState } from "react";
 import "./signup.css"
 import {useNavigate} from 'react-router-dom' 
+import { useDispatch } from "react-redux";
+import { userRegister } from "../../../features/user/userSlice";
 
 const SignUp = () => {
   const navigate = useNavigate();
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  useEffect(()=>{
-    
+  const dispatch = useDispatch();
+  const [signUp, setSignUp] = useState({
+    name: "",
+    email: "",
+    password: ""
   })
 
-  const collectData = async()=>{
-    console.log(name,email,password);
-    let result = await fetch("http://localhost:5000/register",{
-      method:'post',
-      body: JSON.stringify({
-        name,
-        email,
-        password
-      }),
-      headers: {
-        'Content-Type': 'application/json'
-      }
+  const onChangeHandler = (e)=>{
+    const {name, value} = e.target;
+    setSignUp({
+      ...signUp,
+      [name]: value
     })
-    result = await result.json();
-    console.log(result);
-    localStorage.setItem("user",JSON.stringify(result.result))
-    localStorage.setItem("token",JSON.stringify(result.auth))
-    if(result){
-      navigate("/")
-    }
+  }
+
+  const collectData = async()=>{
+    dispatch(userRegister(signUp))
+    // let result = await fetch("http://localhost:5000/register",{
+    //   method:'post',
+    //   body: JSON.stringify({
+    //     name,
+    //     email,
+    //     password
+    //   }),
+    //   headers: {
+    //     'Content-Type': 'application/json'
+    //   }
+    // })
+    // result = await result.json();
+    // console.log(result);
+    // localStorage.setItem("user",JSON.stringify(result.result))
+    // localStorage.setItem("token",JSON.stringify(result.auth))
+    // if(result){
+    //   navigate("/")
+    // }
   }
   return (
     <div className="register signup">
@@ -40,22 +49,25 @@ const SignUp = () => {
         className="inputBox"
         type="text"
         placeholder="Enter Name"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
+        name="name"
+        value={signUp.name}
+        onChange={onChangeHandler}
       />
       <input
         className="inputBox"
         type="email"
         placeholder="Enter Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
+        name="email"
+        value={signUp.email}
+        onChange={onChangeHandler}
       />
       <input
         className="inputBox"
         type="password"
         placeholder="Enter Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
+        name="password"
+        value={signUp.password}
+        onChange={onChangeHandler}
       />
       <button type="button" className="appButton" onClick={collectData}>
         Sign Up

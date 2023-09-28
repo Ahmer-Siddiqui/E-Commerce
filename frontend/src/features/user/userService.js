@@ -7,7 +7,7 @@ const login = async (userData) => {
   return response.data;
 };
 const register = async (userData) => {
-  const response = await axios.post(`${USER_API_URL}/login`, userData);
+  const response = await axios.post(`${USER_API_URL}/register`, userData);
   return response.data;
 };
 

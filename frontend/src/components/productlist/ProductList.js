@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
-import "./productList.css"
+import Button from "react-bootstrap/Button";
+import Card from "react-bootstrap/Card";
+import "./productList.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {
@@ -44,7 +46,7 @@ const ProductList = () => {
   }, [dispatch]);
 
   return (
-    <div className="productList">
+    <div className="productList mainSize">
       <h3>Product List</h3>
       <input
         type="text"
@@ -52,45 +54,114 @@ const ProductList = () => {
         onChange={onSearchHandler}
         placeholder="Search Product"
       />
-      <ul>
-        <li>S.no</li>
-        <li>Name</li>
-        <li>Price</li>
-        <li>Category</li>
-        <li>Operation</li>
-      </ul>
-      {products.length > 0 ? (
-        products.map((item, index) => {
-          return (
-            <ul key={index}>
-              <li>{index + 1}.</li>
-              <li>{item.name}</li>
-              <li>$ {item.price}</li>
-              <li>{item.category}</li>
-              <li>
-                <button
-                  onClick={() => {
-                    onDeleteProductHandler(item._id);
-                  }}
-                >
-                  Delete
-                </button>
-                <button
-                  onClick={() => {
-                    onUpdateHandler(item._id);
-                  }}
-                >
-                  Update
-                </button>
-              </li>
-            </ul>
-          );
-        })
-      ) : (
-        <h1>No Result Found</h1>
-      )}
+      <div className="container-fluid">
+        <div className="cardsMain">
+          {products.length > 0 ? (
+            products.map((item, index) => {
+              return (
+                <div key={index}>
+                  <Card style={{ width: "18rem" }}>
+                    <Card.Img
+                      variant="top"
+                      src="https://images.unsplash.com/photo-1472214103451-9374bd1c798e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cGljfGVufDB8fDB8fHww&auto=format&fit=crop&w=400&q=60"
+                    />
+                    <Card.Body>
+                      <Card.Title className="text-start">
+                        {item.name}
+                      </Card.Title>
+                      <h5 className="text-start">
+                        {item.company}{" "}
+                        <span
+                          className="fw-bold fs-6 px-2 rounded"
+                          style={{ border: "1px solid black" }}
+                        >
+                          Price Rs:{item.price}
+                        </span>
+                      </h5>
+                      {/* <Card.Text>
+            Some quick example text to build on the card title and make up the
+            bulk of the card's content.
+          </Card.Text> */}
+                      <div className="d-flex justify-content-center">
+                        <Button
+                          variant="primary"
+                          className="mx-1"
+                          onClick={() => {
+                            onUpdateHandler(item._id);
+                          }}
+                        >
+                          Edit
+                        </Button>
+                        <Button
+                          variant="danger"
+                          onClick={() => {
+                            onDeleteProductHandler(item._id);
+                          }}
+                        >
+                          Delete
+                        </Button>
+                      </div>
+                    </Card.Body>
+                  </Card>
+                </div>
+              );
+            })
+          ) : (
+            <h1>No Result Found</h1>
+          )}
+        </div>
+      </div>
     </div>
   );
 };
+
+// function BasicExample({ item, index }) {
+//   console.log(item);
+//   return (
+//     <div key={index} className="col-3">
+//       <Card style={{ width: "18rem" }}>
+//         <Card.Img
+//           variant="top"
+//           src="https://images.unsplash.com/photo-1472214103451-9374bd1c798e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cGljfGVufDB8fDB8fHww&auto=format&fit=crop&w=400&q=60"
+//         />
+//         <Card.Body>
+//           <Card.Title className="text-start">{item.name}</Card.Title>
+//           <h5 className="text-start">
+//             {item.company}{" "}
+//             <span
+//               className="fw-bold fs-6 px-2 rounded"
+//               style={{ border: "1px solid black" }}
+//             >
+//               Price Rs:{item.price}
+//             </span>
+//           </h5>
+//           {/* <Card.Text>
+//             Some quick example text to build on the card title and make up the
+//             bulk of the card's content.
+//           </Card.Text> */}
+//           <div className="d-flex justify-content-center">
+//             <Button
+//               variant="primary"
+//               className="mx-1"
+//               onClick={() => {
+//                 onUpdateHandler(item._id);
+//               }}
+//             >
+//               Edit
+//             </Button>
+//             <Button
+//               variant="danger"
+//               onClick={() => {
+//                 onDeleteProductHandler(item._id);
+//               }}
+//             >
+//               Delete
+//             </Button>
+//           </div>
+//         </Card.Body>
+//       </Card>
+//     </div>
+//   );
+// }
 
 export default ProductList;

@@ -1,7 +1,8 @@
 .productList .search-product-box {
-  width: 400px;
-  margin: 20px;
+  width: 50%;
+  margin: 20px auto;
   height: 40px;
+  border-radius: 15px;
   border: 1px solid skyblue;
   padding-left: 20px;
 }
@@ -13,5 +14,10 @@
 }
 .productList {
   text-align: center;
-  margin: 50px;
+}
+.productList .cardsMain{
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
 }

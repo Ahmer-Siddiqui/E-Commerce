@@ -4,6 +4,7 @@
 }
 .navbar .nav-ul {
   position: sticky;
+  margin: 0;
   display: flex;
   align-items: center;
   height: 10vh;

@@ -4,6 +4,10 @@
   padding: 0;
   box-sizing: border-box;
 }
+.mainSize{
+  border: 1px solid black;
+  min-height: 80vh;
+}
 /* .nav-ul {
   display: flex;
   align-items: center;
