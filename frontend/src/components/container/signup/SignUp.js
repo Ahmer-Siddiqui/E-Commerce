@@ -44,7 +44,7 @@ const SignUp = () => {
   }
   return (
     <div className="register signup">
-      <h1>Register</h1>
+      {/* <h1>Register</h1>
       <input
         className="inputBox"
         type="text"
@@ -71,7 +71,7 @@ const SignUp = () => {
       />
       <button type="button" className="appButton" onClick={collectData}>
         Sign Up
-      </button>
+      </button> */}
     </div>
   );
 };
