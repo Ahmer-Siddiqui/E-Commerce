@@ -1,7 +1,25 @@
 .navbar{
   margin: 0;
   padding: 0;
+  position: sticky;
+  top: 0;
+  z-index: 3;
+  min-height: 10vh;
+  width: 100%;
+  border-radius: 0 0 10px 10px;
+  box-shadow: 0px 1px 10px 5px rgba(126, 126, 129, 0.507);
 }
+.logo {
+  margin-left: -15px;
+  height: 10vh;
+  width: 10vw;
+}
+.navbar .logo img {
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
+}
+/*
 .navbar .nav-ul {
   position: sticky;
   margin: 0;
@@ -12,15 +30,8 @@
   background-color: skyblue;
 }
 
-.navbar .logo {
-  height: 100%;
-  width: 15%;
-}
-.navbar .logo img {
-  height: 100%;
-  width: 100%;
-  object-fit: contain;
-}
+
+
 .navbar .nav-right {
   display: flex;
   justify-content: flex-end;
@@ -33,4 +44,4 @@
   color: #fff;
   text-decoration: none;
   padding: 5px;
-}
+} */

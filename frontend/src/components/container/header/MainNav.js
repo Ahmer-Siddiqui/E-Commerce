@@ -22,16 +22,14 @@ const MainNav = () => {
         <>
           {/* Boot Nav start */}
           <Navbar expand="lg" className="bg-body-tertiary">
-            <Container>
-              <Navbar.Brand href="#home">
+            <div className="container-fluid">
                 <div className="logo">
                   <img
                     src={require("../../../assets/img/logo.png")}
                     alt="logo"
                   />
                 </div>
-              </Navbar.Brand>
-              <Navbar.Toggle aria-controls="basic-navbar-nav" />
+              <Navbar.Toggle aria-controls="basic-navbar-nav mx-5" />
               <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="me-auto">
                   <NavLink className="nav-link" to="/">
@@ -51,32 +49,28 @@ const MainNav = () => {
                   </NavLink>
                 </Nav>
               </Navbar.Collapse>
-            </Container>
+            </div>
           </Navbar>
         </>
       ) : (
           <Navbar expand="lg" className="bg-body-tertiary">
-            <Container>
-              <Navbar.Brand href="#home">
+            <div className="container-fluid ">
                 <div className="logo">
                   <img
                     src={require("../../../assets/img/logo.png")}
                     alt="logo"
                   />
                 </div>
-              </Navbar.Brand>
-              <Navbar.Toggle aria-controls="basic-navbar-nav" />
-              <Navbar.Collapse id="basic-navbar-nav">
-                <Nav className="me-auto">
-                  <NavLink className="nav-link" to="/signup">
+
+                <div className="d-flex">
+                  <NavLink className="nav-link mx-2 mx-md-3 mx-lg-5" to="/signup">
                     Sign Up
                   </NavLink>
                   <NavLink className="nav-link" to="/login">
                     Login
                   </NavLink>
-                </Nav>
-              </Navbar.Collapse>
-            </Container>
+                </div>
+            </div>
           </Navbar>
       )}
     </div>
