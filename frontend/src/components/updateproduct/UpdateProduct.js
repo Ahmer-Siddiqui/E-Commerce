@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react";
-import "./updateProduct.css"
+import "./updateProduct.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { getSingleProduct, updateSingleProduct } from "../../features/product/productSlice";
+import {
+  getSingleProduct,
+  updateSingleProduct,
+} from "../../features/product/productSlice";
 
 const UpdateProduct = () => {
   const navigate = useNavigate();
@@ -19,14 +22,13 @@ const UpdateProduct = () => {
   });
 
   const onUpdateProductHandler = async () => {
-    dispatch(updateSingleProduct(updateData))
+    dispatch(updateSingleProduct(updateData));
     navigate("/");
   };
 
   const getProductsDetails = async () => {
-      setUpdateData(singleProduct)
+    setUpdateData(singleProduct);
   };
-
 
   const onChangeHandler = (e) => {
     const { name, value } = e.target;
@@ -34,56 +36,55 @@ const UpdateProduct = () => {
       ...updateData,
       [name]: value,
     });
-  }; 
-  
+  };
+
   useEffect(() => {
     dispatch(getSingleProduct(params.id));
   }, [dispatch]);
-  
+
   useEffect(() => {
     getProductsDetails();
   }, [singleProduct]);
   return (
-    <div className="updateProduct">
-      <h1>Update Product</h1>
-      <input
-        type="text"
-        className="inputBox"
-        placeholder="Enter Product Name"
-        name="name"
-        value={updateData.name}
-        onChange={onChangeHandler}
-      />
-      <input
-        type="text"
-        className="inputBox"
-        placeholder="Enter Product price"
-        name="price"
-        value={updateData.price}
-        onChange={onChangeHandler}
-      />
-      <input
-        type="text"
-        className="inputBox"
-        placeholder="Enter Product category"
-        name="category"
-        value={updateData.category}
-        onChange={onChangeHandler}
-      />
-      <input
-        type="text"
-        className="inputBox"
-        placeholder="Enter Product company"
-        name="company"
-        value={updateData.company}
-        onChange={onChangeHandler}
-      />
-      <button
-        onClick={onUpdateProductHandler}
-        className="appButton"
-      >
-        Update Product
-      </button>
+    <div className="mainSize">
+      <div className="updateProduct">
+        <h1>Update Product</h1>
+        <input
+          type="text"
+          className="inputBox"
+          placeholder="Enter Product Name"
+          name="name"
+          value={updateData.name}
+          onChange={onChangeHandler}
+        />
+        <input
+          type="text"
+          className="inputBox"
+          placeholder="Enter Product price"
+          name="price"
+          value={updateData.price}
+          onChange={onChangeHandler}
+        />
+        <input
+          type="text"
+          className="inputBox"
+          placeholder="Enter Product category"
+          name="category"
+          value={updateData.category}
+          onChange={onChangeHandler}
+        />
+        <input
+          type="text"
+          className="inputBox"
+          placeholder="Enter Product company"
+          name="company"
+          value={updateData.company}
+          onChange={onChangeHandler}
+        />
+        <button onClick={onUpdateProductHandler} className="appButton">
+          Update Product
+        </button>
+      </div>
     </div>
   );
 };

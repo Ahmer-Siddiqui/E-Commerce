@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./addProduct.css"
+import "./addProduct.css";
 import { useDispatch } from "react-redux";
 import { addingProduct } from "../../features/product/productSlice";
 
@@ -39,58 +39,59 @@ const AddProduct = () => {
       ...productData,
       [name]: value,
     });
-    
   };
   return (
-    <div className="product addProduct">
-      <h1>Add Product</h1>
-      <input
-        type="text"
-        className="inputBox"
-        placeholder="Enter Product Name"
-        name="name"
-        value={productData.name}
-        onChange={onChangeHandler}
-      />
-      {error && !name && (
-        <span className="invalid-input">Enter valid name</span>
-      )}
-      <input
-        type="text"
-        className="inputBox"
-        placeholder="Enter Product price"
-        name="price"
-        value={productData.price}
-        onChange={onChangeHandler}
-      />
-      {error && !price && (
-        <span className="invalid-input">Enter valid price</span>
-      )}
-      <input
-        type="text"
-        className="inputBox"
-        placeholder="Enter Product category"
-        name="category"
-        value={productData.category}
-        onChange={onChangeHandler}
-      />
-      {error && !category && (
-        <span className="invalid-input">Enter valid category</span>
-      )}
-      <input
-        type="text"
-        className="inputBox"
-        placeholder="Enter Product company"
-        name="company"
-        value={productData.company}
-        onChange={onChangeHandler}
-      />
-      {error && !company && (
-        <span className="invalid-input">Enter valid company</span>
-      )}
-      <button onClick={addProduct} className="appButton">
-        Add Product
-      </button>
+    <div className="mainSize">
+      <div className="product addProduct">
+        <h1>Add Product</h1>
+        <input
+          type="text"
+          className="inputBox"
+          placeholder="Enter Product Name"
+          name="name"
+          value={productData.name}
+          onChange={onChangeHandler}
+        />
+        {error && !name && (
+          <span className="invalid-input">Enter valid name</span>
+        )}
+        <input
+          type="text"
+          className="inputBox"
+          placeholder="Enter Product price"
+          name="price"
+          value={productData.price}
+          onChange={onChangeHandler}
+        />
+        {error && !price && (
+          <span className="invalid-input">Enter valid price</span>
+        )}
+        <input
+          type="text"
+          className="inputBox"
+          placeholder="Enter Product category"
+          name="category"
+          value={productData.category}
+          onChange={onChangeHandler}
+        />
+        {error && !category && (
+          <span className="invalid-input">Enter valid category</span>
+        )}
+        <input
+          type="text"
+          className="inputBox"
+          placeholder="Enter Product company"
+          name="company"
+          value={productData.company}
+          onChange={onChangeHandler}
+        />
+        {error && !company && (
+          <span className="invalid-input">Enter valid company</span>
+        )}
+        <button onClick={addProduct} className="appButton">
+          Add Product
+        </button>
+      </div>
     </div>
   );
 };

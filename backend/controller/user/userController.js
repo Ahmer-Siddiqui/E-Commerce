@@ -3,22 +3,31 @@ const Jwt = require("jsonwebtoken");
 const { jwtKey } = process.env;
 
 const loginUser = async (req, resp) => {
-  if (req.body.password && req.body.email) {
-    let user = await User.findOne(req.body).select("-password");
-    if (user) {
-      Jwt.sign({ user }, jwtKey, { expiresIn: "2h" }, (err, token) => {
-        if (err) {
-          resp.send({
-            result: "Token error",
-          });
-        }
-        resp.status(200).json({ user, auth: token });
-      });
+  try {
+    const { email, password } = req.body;
+    if (password && email) {
+      let user = await User.findOne({ email, password }).select("-password");
+      if (user) {
+        Jwt.sign({ user }, jwtKey, { expiresIn: "2h" }, (err, token) => {
+          if (err) {
+            resp.send({ 
+              result: "Token error",
+            });
+          }
+          else{
+            resp.status(200).json({ user, auth: token });
+          }
+        });
+      } 
+      else {
+        resp.status(404).json({ result: "No User Found" });
+      } 
     } else {
-      resp.status(404).json({ result: "No User Found" });
+    return  resp.status(400).json({ error: "Email and password are required" });
     }
-  } else {
-    resp.send({ result: "Some Error occured" });
+  } 
+  catch (err) {
+    resp.status(500).json({ error: "Internal Server Error" });
   }
 };
 
@@ -33,11 +42,16 @@ const registerUser = async (req, resp) => {
           result: "Token error",
         });
       }
-      resp.status(200).json({ result, auth: token });
+      resp.send({ result, auth: token });
     });
   } catch (err) {
-    resp.send({ error: err });
+    if(err.name === "MongoServerError"){
+      resp.send({ error: "MongoServerError found"});
+    }
+    else{
+      resp.send({ error: "Something went wrong"});
+    }
   }
 };
 
-module.exports = { registerUser, loginUser };
+module.exports = { registerUser, loginUser }

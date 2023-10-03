@@ -36,13 +36,14 @@ export const userRegister = createAsyncThunk(
       return thunkAPI.fulfillWithValue(result);
     } 
     catch (error) {
-      const message =
-          (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      return thunkAPI.rejectWithValue(message);
+      // const message =
+      //     (error.response &&
+      //     error.response.data &&
+      //     error.response.data.message) ||
+      //   error.message ||
+      //   error.toString();
+        console.log(error);
+      // return thunkAPI.rejectWithValue(message);
     }
   }
 );
