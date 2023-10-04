@@ -17,12 +17,13 @@ export const getSingleProduct = createAsyncThunk(
       const result = await productService.singleProduct(id);
       return thunkAPI.fulfillWithValue(result);
     } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
+      const message = error.response
+      console.log(message);
+        // (error.response &&
+        //   error.response.data &&
+        //   error.response.data.message) ||
+        // error.message ||
+        // error.toString();
       return thunkAPI.rejectWithValue(message);
     }
   }

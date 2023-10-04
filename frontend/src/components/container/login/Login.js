@@ -5,6 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { userLogin } from "../../../features/user/userSlice";
 
 const Login = () => {
+  document.title = "Login"
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { result } = useSelector((state) => state.user);
